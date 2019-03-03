@@ -1,0 +1,53 @@
+Sub WallStreet()
+
+’First, I define my variables. Very imporant to define the worksheet.
+
+Dim ws As Worksheet
+Dim Ticker As String
+Dim TotalStockVolume As Double
+Dim Final_Table As Integer
+
+’Double is used when a fraction or decimal points are going to be shown inthe calculation.
+’Define that this excersive is going to be done bye for each worksheet.
+
+For Each ws In ActiveWorkbook.Worksheets
+ws.Activate
+TotalStockVolume = 0
+Final_Table = 2
+
+   ws.Range(“I1”).Value = “Ticker”
+   ws.Range(“J1”).Value = “TotalStockVolume”
+
+
+’Tell the code when to stop
+LastRow = ws.Cells(Rows.Count, 1).End(xlUp).Row
+
+
+For a = 2 To LastRow
+’All if’s are related to the comparisson amongst the same ticker, in order to keep adding up and calculate volume.
+
+If Cells(a + 1, 1).Value <> Cells(a, 1).Value Then
+
+’Setting the Ticker value, I Tried with cells, but is more related to the set value we are looping, so it should be run with a.
+
+Ticker = Cells(a, 1).Value
+’Then, start adding up volume.
+TotalStockVolume = TotalStockVolume + Cells(a, 7).Value
+
+’Design and fill table:
+ws.Range(“I” & Final_Table).Value = Ticker
+ws.Range(“J” & Final_Table).Value = TotalStockValue
+
+TotalStockVolume = 0
+
+Else
+Ticker = Cells(a + 1, 1).Value
+TotalStockVolume = TotalStockVolume + Cells(a+1, 7).Value
+
+ws.Range(“I” & Final_Table).Value = Ticker
+ws.Range(“J” & Final_Table).Value = TotalStockValue
+
+End If
+Next a
+Next ws
+End Sub
